@@ -9,6 +9,32 @@
     "DataActions": [],
     "NotDataActions": [],
     "AssignableScopes": [
-        "/subscriptions/<subscriptionId>"
+        "/subscriptions/b2375b5f-8dab-4436-b87c-32bc7fdce5d0"
+    ]
+}{
+    "Name": "CosmosDB List Keys",
+    "IsCustom": true,
+    "Description": "Can list CosmosDB account keys",
+    "Actions": [
+        "Microsoft.DocumentDB/databaseAccounts/listKeys/*"
+    ],
+    "NotActions": [],
+    "DataActions": [],
+    "NotDataActions": [],
+    "AssignableScopes": [
+        "/subscriptions/b2375b5f-8dab-4436-b87c-32bc7fdce5d0"
+    ]
+}{
+    "Name": "CosmosDB List Keys",
+    "IsCustom": true,
+    "Description": "Can list CosmosDB account keys",
+    "Actions": [
+        "Microsoft.DocumentDB/databaseAccounts/listKeys/*"
+    ],
+    "NotActions": [],
+    "DataActions": [],
+    "NotDataActions": [],
+    "AssignableScopes": [
+        "/subscriptions/b2375b5f-8dab-4436-b87c-32bc7fdce5d0"
     ]
 }

@@ -1,9 +1,6 @@
 @description('Specifies the region of all resources. Defaults to location of resource group')
 param location string = resourceGroup().location
 
-@description('Name of the application. Used as a suffix for resources')
-param applicationName string = uniqueString(resourceGroup().id)
-
 @description('The SKU for the storage account')
 param storageSku string = 'Standard_LRS'
 
@@ -28,14 +25,16 @@ param collectionName string = 'TodoItems'
 @description('The name for the Mongo DB database')
 param cosmosDbName string = 'TodoDB'
 
+@description('The name of a custom RBAC role definition that allows the function app to list keys on the Cosmos DB account')
 param cosmosDBCustomRoleDefinitionId string
 
-var storageAccountName = 'fnstor${replace(applicationName, '-', '')}'
-var appInsightsName = '${applicationName}-ai'
-var appServicePlanName = '${applicationName}-asp'
-var workspaceName = '${applicationName}-wks'
-var cosmosDbAccountName = '${applicationName}db'
-var functionAppName = '${applicationName}-fa'
+var affix = uniqueString(resourceGroup().id)
+var storageAccountName = 'fnstor${replace(affix, '-', '')}'
+var appInsightsName = '${affix}-ai'
+var appServicePlanName = '${affix}-asp'
+var workspaceName = '${affix}-wks'
+var cosmosDbAccountName = '${affix}db'
+var functionAppName = '${affix}-fa'
 var functionRuntime = 'dotnet'
 
 var consistencyPolicy = {
@@ -86,7 +85,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   }
   properties: {
     maximumElasticWorkerCount: 20
-    reserved: true // linux
+    reserved: true // denotes linux function app
   }
 }
 
@@ -236,7 +235,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
 }
 
 resource cosmosDbOperatorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().subscriptionId, 'cosmosDbListKeysCustomRoleAssignment')
+  name: guid(resourceGroup().id, cosmosDBCustomRoleDefinitionId, functionApp.name)
   scope: cosmosAccount
   properties: {
     principalId: functionApp.identity.principalId
