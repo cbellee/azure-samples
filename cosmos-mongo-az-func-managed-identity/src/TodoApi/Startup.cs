@@ -41,7 +41,7 @@ namespace Todo.Api
                 ArmClient client = new ArmClient(new DefaultAzureCredential());
                 ResourceIdentifier rid = Azure.ResourceManager.CosmosDB.CosmosDBAccountResource.CreateResourceIdentifier(config["subscriptionId"], config["resourceGroup"], config["cosmosDbAccount"]);
                 CosmosDBAccountKeyList keys = client.GetCosmosDBAccountResource(rid).GetKeys();
-                String mongoConnection = $"mongodb://{config["cosmosDbAccount"]}:{keys.PrimaryMasterKey}@{config["cosmosDbAccount"]}.{config["cosmosMongoSuffix"]}:{config["port"]}/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@{config["cosmosDbAccount"]}@";
+                String mongoConnection = $"mongodb://{config["cosmosDbAccount"]}:{keys.PrimaryMasterKey}@{config["cosmosDbAccount"]}.{config["cosmosMongoSuffix"]}:{config["cosmosDbPort"]}/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@{config["cosmosDbAccount"]}@";
 
                 MongoClient mongoClient = new MongoClient(mongoConnection);
                 return mongoClient;

@@ -1,0 +1,14 @@
+{
+    "Name": "CosmosDB List Keys",
+    "IsCustom": true,
+    "Description": "Can list CosmosDB account keys",
+    "Actions": [
+        "Microsoft.DocumentDB/databaseAccounts/listKeys/*"
+    ],
+    "NotActions": [],
+    "DataActions": [],
+    "NotDataActions": [],
+    "AssignableScopes": [
+        "/subscriptions/<subscriptionId>"
+    ]
+}

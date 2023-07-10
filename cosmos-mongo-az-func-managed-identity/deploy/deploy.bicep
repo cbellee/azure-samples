@@ -28,6 +28,8 @@ param collectionName string = 'TodoItems'
 @description('The name for the Mongo DB database')
 param cosmosDbName string = 'TodoDB'
 
+param cosmosDBCustomRoleDefinitionId string
+
 var storageAccountName = 'fnstor${replace(applicationName, '-', '')}'
 var appInsightsName = '${applicationName}-ai'
 var appServicePlanName = '${applicationName}-asp'
@@ -201,10 +203,6 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
           value: database.name
         }
         {
-          name: 'port'
-          value: '10255'
-        }
-        {
           name: 'cosmosMongoSuffix'
           value: 'mongo.cosmos.azure.com'
         }
@@ -224,6 +222,10 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
           value: 'true'
         }
+        {
+          name: 'cosmosDbPort'
+          value: '10255'
+        }
       ]
     }
     httpsOnly: true
@@ -234,12 +236,13 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
 }
 
 resource cosmosDbOperatorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().subscriptionId, 'cosmosDbOperatorRoleAssignment')
+  name: guid(subscription().subscriptionId, 'cosmosDbListKeysCustomRoleAssignment')
   scope: cosmosAccount
   properties: {
     principalId: functionApp.identity.principalId
-    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/230815da-be43-4aae-9cb4-875f7bd000aa'
+    roleDefinitionId: cosmosDBCustomRoleDefinitionId
     principalType: 'ServicePrincipal'
   }
 }
 
+output functionAppName string = functionApp.name
