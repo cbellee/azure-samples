@@ -1,4 +1,4 @@
-rgName='cosmos-mongodb-func-rg'
+rgName='cosmos-mongodb-func-mid-rg'
 location='australiaeast'
 subscriptionId=$(az account show --query id --output tsv)
 
@@ -36,3 +36,7 @@ zip -r ./deploy.zip .
 az functionapp deployment source config-zip -g $rgName -n $functionAppName --src ./deploy.zip
 
 curl https://$functionAppName.azurewebsites.net/api/todo -d '{"title":"get dog food","iscomplete":true}'
+curl https://$functionAppName.azurewebsites.net/api/todo -d '{"title":"get cat food","iscomplete":true}'
+curl https://$functionAppName.azurewebsites.net/api/todo -d '{"title":"get milk","iscomplete":true}'
+curl https://$functionAppName.azurewebsites.net/api/todo -d '{"title":"get bread","iscomplete":true}'
+curl https://$functionAppName.azurewebsites.net/api/todo -d '{"title":"get cheese","iscomplete":true}'
