@@ -130,6 +130,7 @@ resource daprApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         appProtocol: 'http'
         enabled: true
         logLevel: 'debug'
+        enableApiLogging: true
       }
       ingress: {
         external: true
