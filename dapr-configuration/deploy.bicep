@@ -64,6 +64,24 @@ resource appConfig 'Microsoft.AppConfiguration/configurationStores@2023-03-01' =
   }
 }
 
+resource appConfigItem1 'Microsoft.AppConfiguration/configurationStores/keyValues@2023-03-01' = {
+  name: 'orderId1'
+  parent: appConfig
+  properties: {
+    contentType: 'application/vnd.microsoft.appconfig.keyvalue'
+    value: '1000'
+  }
+}
+
+resource appConfigItem2 'Microsoft.AppConfiguration/configurationStores/keyValues@2023-03-01' = {
+  name: 'orderId2'
+  parent: appConfig
+  properties: {
+    contentType: 'application/vnd.microsoft.appconfig.keyvalue'
+    value: '2000'
+  }
+}
+
 resource acaEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' = {
   name: acaEnvName
   location: location

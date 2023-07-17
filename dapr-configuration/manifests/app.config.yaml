@@ -1,0 +1,14 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: configstore
+spec:
+  type: configuration.azure.appconfig
+  version: v1
+  metadata:
+  - name: connectionString
+    secretKeyRef:
+      name: appConfigConnectionString
+      kay: appConfigConnectionString
+  - name: azureEnvironment
+    value: "AZUREPUBLICCLOUD"
